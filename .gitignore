@@ -1,0 +1,34 @@
+# ===== DB 접속 정보 (비밀번호가 들어 있으므로 절대 올리지 않기) =====
+src/main/resources/db.properties
+
+# ===== Gradle =====
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== IntelliJ IDEA =====
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ===== Eclipse =====
+.classpath
+.project
+.settings/
+bin/
+
+# ===== VS Code =====
+.vscode/
+
+# ===== 컴파일 결과물 =====
+*.class
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 로그 =====
+*.log
