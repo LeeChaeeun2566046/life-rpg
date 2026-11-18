@@ -15,8 +15,8 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("내 인생 RPG");
-            frame.add(new JLabel("내 인생 RPG - 프로젝트 실행 확인", SwingConstants.CENTER));
-            frame.setSize(480, 320);
+            frame.setContentPane(new liferpg.view.MainScreen());
+            frame.setSize(1000, 600);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
