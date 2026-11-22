@@ -1,6 +1,7 @@
 package liferpg.dao;
 import liferpg.model.Quest;
 
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import liferpg.model.User;
+import liferpg.model.User;
+import liferpg.model.User;
+
 
 public class UserDao {
     public UserDao() {
