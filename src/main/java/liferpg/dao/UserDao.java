@@ -7,18 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import liferpg.model.User;
-import liferpg.model.User;
-import liferpg.model.User;
+import liferpg.connector.*;
 
 
 public class UserDao {
-    public UserDao() {
-    	private final DatabaseConnector connector;
-    	
-    	public UserDao(DatabaseConnector connector) {
+	private final DatabaseConnector connector;
+    
+	public UserDao(DatabaseConnector connector) {
     		this.connector = connector;
-    	}
     }
+    
     
     public void insertUser(User user) {
     	String sql = "INSERT INTO user (exp, level, completed_count) VALUES (?, ?, ?)";
