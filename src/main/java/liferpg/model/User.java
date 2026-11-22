@@ -31,10 +31,10 @@ public class User {
     public void setCompletedCount(int completedCount) { this.completedCount = completedCount; }
 
     public List<Integer> getQuestsetIdList() { return questsetIdList; }
-    public void setAward_id_list(List<Integer> questSet_id_list) { this.questsetIdList = questsetIdList; }
+    public void setQuestsetIdList(List<Integer> questSet_id_list) { this.questsetIdList = questsetIdList; }
 
     public List<Integer> getQuestIdList() { return questIdList; }
-    public void setQuest_id_list(List<Integer> questIdList) { this.questIdList = questIdList; }
+    public void setQuestIdList(List<Integer> questIdList) { this.questIdList = questIdList; }
 
     public Map<String, Integer> getAbilityPoints() { return abilityPoints; }
     public void setAbilityPoints(Map<String, Integer> abilityPoints) { this.abilityPoints = abilityPoints; }
