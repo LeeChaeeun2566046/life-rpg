@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class User {
     private int userId;
+    private String nickname;
     private int exp;
     private int level;
     private int completedCount;
@@ -17,6 +18,9 @@ public class User {
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
 
+    public String getNickname() { return nickname; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
+    
     public int getExp() { return exp; }
     public void setExp(int exp) { this.exp = exp; }
 
