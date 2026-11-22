@@ -1,6 +1,8 @@
 package liferpg.dao;
 
 import java.beans.Statement;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,7 +63,7 @@ public class UserDao {
     	}  
     }
     
-    public void updateExp(int userId, int exp) {
+    public void updateExp(int userId, int exp) throws FileNotFoundException, IOException {
     	String sql = "UPDATE user SET exp=? WHERE user_id = ?";
     	
     	try (Connection conn = connector.getConnection();

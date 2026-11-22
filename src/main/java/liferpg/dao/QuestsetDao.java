@@ -3,6 +3,8 @@ package liferpg.dao;
 import liferpg.model.QuestSet;
 import liferpg.connector.DatabaseConnector;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -26,7 +28,7 @@ public class QuestsetDao {
 	
 	
 	
-	public void insertQuestset(QuestSet questset) {
+	public void insertQuestset(QuestSet questset) throws FileNotFoundException, IOException {
 		String sql = "INSERT INTO questset (repeat_num, completed_num, user_id, start_date, consistent) VALUES (?, ?, ?, ?, ?)";
 		// 아예 새로운 quest set을 등록할 때, id 는 사용자가 설정하지 않고 시스템에서 자동 부여합니다 (Statement.RETURN_GENERATED_KEYS)
 		
@@ -62,7 +64,7 @@ public class QuestsetDao {
 	}
 	
 	
-	void updateCompletedNum(int questsetId, int completedNum) {
+	void updateCompletedNum(int questsetId, int completedNum) throws FileNotFoundException, IOException {
 		String sql = "UPDATE questset SET completed_num =? WHERE questset_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -86,7 +88,7 @@ public class QuestsetDao {
 	
 	}
 	
-	void updateConsistent(int questsetId, boolean consistent) {
+	void updateConsistent(int questsetId, boolean consistent) throws FileNotFoundException, IOException {
 		String sql = "UPDATE questset SET completed_num =? WHERE questset_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -185,7 +187,7 @@ public class QuestsetDao {
 		QuestSet questset = new QuestSet();
 		String sql = "SELECT * FROM quest WHERE quest_id = ?";
 		
-		try (Conenction conn = connector.getConnection();
+		try (Connection conn = connector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			
 			// data binding
@@ -215,7 +217,7 @@ public class QuestsetDao {
 	}
 
 	// 새로 추가함!!
-	public List<Integer> findAllByUserId(int userId) { 
+	public List<Integer> findAllByUserId(int userId) throws FileNotFoundException, IOException { 
 		/* 사용 예시
 		 * 
 		 * userId = 101

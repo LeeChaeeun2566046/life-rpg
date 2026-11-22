@@ -3,6 +3,8 @@ package liferpg.dao;
 import liferpg.model.Quest;
 import liferpg.connector.DatabaseConnector;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -26,7 +28,7 @@ public class QuestDao {
     } // end of constructor
 	
 	// 사용자가 새로운 Quest를 등록할 때 사용
-	public void insertQuest(Quest quest) {
+	public void insertQuest(Quest quest) throws FileNotFoundException, IOException {
 		String sql = "INSERT INTO quest (user_id, title, category, difficulty, completed, dueDate, questset_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		// 아예 새로운 quest를 등록할 때, quest id 는 사용자가 설정하지 않고 시스템에서 자동 부여합니다 (Statement.RETURN_GENERATED_KEYS)
 		
@@ -64,7 +66,7 @@ public class QuestDao {
 	}
 	
 
-	public void questComplete(int questId) {
+	public void questComplete(int questId) throws FileNotFoundException, IOException {
 		String sql = "UPDATE quest SET completed=? WHERE quest_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -88,7 +90,7 @@ public class QuestDao {
 	}
 	
 	// 새로 추가함
-	public void updateQuestsetId(int questId, int questsetId) {
+	public void updateQuestsetId(int questId, int questsetId) throws FileNotFoundException, IOException {
 		String sql = "UPDATE quest SET questset_id=? WHERE quest_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -113,7 +115,7 @@ public class QuestDao {
 	}
 	
 	// 새로 추가함!! 이 함수의 리턴값을 User 객체가 필드로 소유한다.
-	public List<Integer> findAllByUserId(int userId) { 
+	public List<Integer> findAllByUserId(int userId) throws FileNotFoundException, IOException { 
 		/* 사용 예시
 		 * 
 		 * userId = 101
@@ -153,7 +155,7 @@ public class QuestDao {
 	}
 
 	// 새로 추가함!!
-	public List<Integer> findAllByQuestsetId(int questsetId) { 
+	public List<Integer> findAllByQuestsetId(int questsetId) throws FileNotFoundException, IOException { 
 		/* 사용 예시
 		 * 
 		 * questsetId = 101
@@ -188,7 +190,7 @@ public class QuestDao {
 	}
 
 	// Quest 목록 보여줄때 사용
-	public List<Quest> findAll() {
+	public List<Quest> findAll() throws FileNotFoundException, IOException {
 	    List<Quest> questList = new ArrayList<>();
 	    String sql = "SELECT * FROM quest";
 	    
@@ -219,7 +221,7 @@ public class QuestDao {
 	}
 
 	// 완료되지 않은 quest를 찾고 싶을 수도 있고, 완료된 quest를 찾고 싶을 수도 있어서 파라미터로 전달할 수 있도록 함	
-	public List<Quest> findCompleted(boolean boo) {
+	public List<Quest> findCompleted(boolean boo) throws FileNotFoundException, IOException {
 	    List<Quest> questList = new ArrayList<>();
 	    String sql = "SELECT * FROM quest WHERE completed = ?";
 	    
@@ -259,11 +261,11 @@ public class QuestDao {
 		
 	}
 	
-	public Quest findById(int questId) {
+	public Quest findById(int questId) throws FileNotFoundException, IOException {
 		Quest q = new Quest();
 		String sql = "SELECT * FROM quest WHERE quest_id = ?";
 		
-		try (Conenction conn = connector.getConnection();
+		try (Connection conn = connector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			
 			// data binding
@@ -296,7 +298,7 @@ public class QuestDao {
 	
 	// 이거 모델에 getCategory()가 있으니까 없어도 될 것 같음
 	// ...다시 생각해보니 필요할수도
-	public String findCategory(int questId) {
+	public String findCategory(int questId) throws FileNotFoundException, IOException {
 	    String sql = "SELECT category FROM quest WHERE quest_id = ?";
 	    String category = null;
 	    try (Connection conn = connector.getConnection();
@@ -318,9 +320,9 @@ public class QuestDao {
 	}
 	 
 	
-	public int findDifficulty(int questId) {
+	public int findDifficulty(int questId) throws FileNotFoundException, IOException {
 	    String sql = "SELECT difficulty FROM quest WHERE quest_id = ?";
-	    int difficulty;
+	    int difficulty = 0;
 	    try (Connection conn = connector.getConnection();
 	    		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	    	
@@ -339,9 +341,9 @@ public class QuestDao {
 	    return difficulty;
 	}
 	
-	public int findAwardId(int questId) {
+	public int findAwardId(int questId) throws FileNotFoundException, IOException {
 	    String sql = "SELECT questset_id FROM quest WHERE quest_id = ?";
-	    int questsetId;
+	    int questsetId = 0;
 	    try (Connection conn = connector.getConnection();
 	    		PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	    	
