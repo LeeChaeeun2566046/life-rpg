@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
  
 import liferpg.model.Quest;
+import liferpg.connector.DatabaseConnector;
 
 public class QuestsetDao {
 	private final DatabaseConnector connector;
@@ -64,7 +65,7 @@ public class QuestsetDao {
 	}
 	
 	
-	void updateCompletedNum(int questsetId, int completedNum) throws FileNotFoundException, IOException {
+	public void updateCompletedNum(int questsetId, int completedNum) throws FileNotFoundException, IOException {
 		String sql = "UPDATE questset SET completed_num =? WHERE questset_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -88,7 +89,7 @@ public class QuestsetDao {
 	
 	}
 	
-	void updateConsistent(int questsetId, boolean consistent) throws FileNotFoundException, IOException {
+	public void updateConsistent(int questsetId, boolean consistent) throws FileNotFoundException, IOException {
 		String sql = "UPDATE questset SET completed_num =? WHERE questset_id=?";
 		
 		try (Connection conn = connector.getConnection(); 
@@ -112,7 +113,7 @@ public class QuestsetDao {
 	
 	}
 	
-	List<QuestSet> findAll() {
+	public List<QuestSet> findAll() {
 	    List<QuestSet> questsetList = new ArrayList<>();
 	    String sql = "SELECT * FROM quest";
 	    
@@ -146,7 +147,7 @@ public class QuestsetDao {
 	}
 	
 	// 완료되지 않은 questset을 찾고 싶을 수도 있고, 완료된 questset를 찾고 싶을 수도 있어서 파라미터로 전달할 수 있도록 함
-	List<QuestSet> findCompleted(boolean boo) {
+	public List<QuestSet> findCompleted(boolean boo) {
 	    List<QuestSet> questsetList = new ArrayList<>();
 	    String sql = "SELECT * FROM quest WHERE completed=?";
 	    
@@ -173,7 +174,7 @@ public class QuestsetDao {
 	    			questset.setQuestId(rs.getInt("quest_id"));
 	    			questset.setConsistent(rs.getBoolean("consistent"));
 	    			questset.setCompletedNum(rs.getInt("completed_num"));
-	    			questsetList.add(a);
+	    			questsetList.add(questset);
 	    		}
 	    	}
 	    } catch (SQLException e) {
@@ -183,7 +184,7 @@ public class QuestsetDao {
 		
 	}
 	
-	QuestSet findById(int questsetId) {
+	public QuestSet findById(int questsetId) {
 		QuestSet questset = new QuestSet();
 		String sql = "SELECT * FROM quest WHERE quest_id = ?";
 		

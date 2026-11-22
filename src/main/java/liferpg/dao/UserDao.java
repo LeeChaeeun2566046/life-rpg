@@ -1,6 +1,6 @@
 package liferpg.dao;
 
-import java.beans.Statement;
+import java.sql.Statement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class UserDao {
     	String sql = "INSERT INTO user (exp, level, completed_count) VALUES (?, ?, ?)";
     	
     	try (Connection conn = connector.getConnection();
-    			PreparedStatement pstmt = conn.preparedStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
     		pstmt.setInt(1,  user.getExp());
     		pstmt.setInt(2, user.getLevel());
     		pstmt.setInt(3,  user.getCompletedCount());
