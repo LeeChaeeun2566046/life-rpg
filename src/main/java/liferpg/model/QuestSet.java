@@ -11,8 +11,8 @@ public class QuestSet {
     private boolean consistent;
 
     // Getters and Setters
-    public int getId() { return questsetId; }
-    public void setId(int id) { this.questsetId = id; }
+    public int getQuestsetId() { return questsetId; }
+    public void setId(int questsetId) { this.questsetId = questsetId; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }

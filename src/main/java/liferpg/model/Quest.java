@@ -13,8 +13,8 @@ public class Quest {
     private LocalDate dueDate; 
 
     // Getters and Setters
-    public int getId() { return questId; }
-    public void setId(int questId) { this.questId = questId; }
+    public int getQuestId() { return questId; }
+    public void setQuestId(int questId) { this.questId = questId; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
@@ -35,5 +35,5 @@ public class Quest {
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
     public Integer getQuestsetId() { return questsetId; }
-    public void setQuestsetId(Integer awardId) { this.questsetId = questsetId; }
+    public void setQuestsetId(Integer questsetId) { this.questsetId = questsetId; }
 }
