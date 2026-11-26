@@ -3,18 +3,18 @@ package liferpg.model;
 import java.time.LocalDate;
 
 public class Quest {
-    private int id;
+    private int questId;
     private int userId;
+    private Integer questsetId;
     private String title;
     private String category;
     private int difficulty;
     private boolean completed;
-    private LocalDate dueDate;
-    private Integer awardId;
+    private LocalDate dueDate; 
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getQuestId() { return questId; }
+    public void setQuestId(int questId) { this.questId = questId; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
@@ -34,6 +34,6 @@ public class Quest {
     public LocalDate getDueDate() { return dueDate; }
     public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 
-    public Integer getAwardId() { return awardId; }
-    public void setAwardId(Integer awardId) { this.awardId = awardId; }
+    public Integer getQuestsetId() { return questsetId; }
+    public void setQuestsetId(Integer questsetId) { this.questsetId = questsetId; }
 }
