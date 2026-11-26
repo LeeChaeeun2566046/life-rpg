@@ -122,20 +122,20 @@ public class QuestsetDao {
 	    	
 	    	try (ResultSet rs = pstmt.executeQuery()) {
 	    		while (rs.next()) {
-	    			QuestSet a = new QuestSet(); 
-	    			a.setUserId(rs.getInt("user_id"));
+	    			QuestSet questset = new QuestSet(); 
+	    			questset.setUserId(rs.getInt("user_id"));
 	    			
 	    			// date -> local date
 	    			Date d = rs.getDate("start_date");
 	    			ZoneId defaultZoneId = ZoneId.systemDefault();
 	    			Instant instant = d.toInstant();
 	    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();  
-	    			a.setStartDate(ld);  
+	    			questset.setStartDate(ld);  
 	    			
-	    			a.setRepeatNum(rs.getInt("repeat_num"));
-	    			a.setQuestId(rs.getInt("quest_id"));
-	    			a.setConsistent(rs.getBoolean("consistent"));
-	    			a.setCompletedNum(rs.getInt("completed_num"));
+	    			questset.setRepeatNum(rs.getInt("repeat_num"));
+	    			questset.setQuestsetId(rs.getInt("questset_id"));
+	    			questset.setConsistent(rs.getBoolean("consistent"));
+	    			questset.setCompletedNum(rs.getInt("completed_num"));
 	    		}
 	    	}
 	    } catch (SQLException e) {
@@ -171,7 +171,7 @@ public class QuestsetDao {
 	    			questset.setStartDate(ld);  
 	    			
 	    			questset.setRepeatNum(rs.getInt("repeat_num"));
-	    			questset.setQuestId(rs.getInt("quest_id"));
+	    			questset.setQuestsetId(rs.getInt("questset_id"));
 	    			questset.setConsistent(rs.getBoolean("consistent"));
 	    			questset.setCompletedNum(rs.getInt("completed_num"));
 	    			questsetList.add(questset);
@@ -206,7 +206,7 @@ public class QuestsetDao {
     			questset.setStartDate(ld);  
      			
     			questset.setRepeatNum(rs.getInt("repeat_num"));
-    			questset.setQuestId(rs.getInt("quest_id"));
+    			questset.setQuestsetId(rs.getInt("questset_id"));
     			questset.setConsistent(rs.getBoolean("consistent"));
     			questset.setCompletedNum(rs.getInt("completed_num"));
  			}

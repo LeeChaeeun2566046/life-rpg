@@ -201,7 +201,7 @@ public class QuestDao {
 	    			Quest q = new Quest();
 	    			q.setUserId(rs.getInt("user_id"));
 	    			q.setTitle(rs.getString("title"));
-	    			q.setId(rs.getInt("quest_id"));
+	    			q.setQuestId(rs.getInt("quest_id"));
 
 	    			Date date = rs.getDate("due_date");
 	    			q.setDueDate(LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault()));   
@@ -234,22 +234,22 @@ public class QuestDao {
 	    	// execute query
 	    	try (ResultSet rs = pstmt.executeQuery()) {
 	    		while (rs.next()) {
-	    			Quest q = new Quest();
-	    			q.setUserId(rs.getInt("user_id"));
-	    			q.setTitle(rs.getString("title"));
-	    			q.setId(rs.getInt("quest_id"));
+	    			Quest quest = new Quest();
+	    			quest.setUserId(rs.getInt("user_id"));
+	    			quest.setTitle(rs.getString("title"));
+	    			quest.setQuestId(rs.getInt("quest_id"));
 	    			
 	    			// date -> local date
 	    			Date d = rs.getDate("due_date");
 	    			ZoneId defaultZoneId = ZoneId.systemDefault();
 	    			Instant instant = d.toInstant();
 	    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();
-	    			q.setDueDate(ld);   
+	    			quest.setDueDate(ld);   
 	    			
-	    			q.setDifficulty(rs.getInt("difficulty"));
-	    			q.setCompleted(rs.getBoolean("completed"));
-	    			q.setCategory(rs.getString("category"));
-	    			q.setQuestsetId(rs.getInt("questset_id"));
+	    			quest.setDifficulty(rs.getInt("difficulty"));
+	    			quest.setCompleted(rs.getBoolean("completed"));
+	    			quest.setCategory(rs.getString("category"));
+	    			quest.setQuestsetId(rs.getInt("questset_id"));
 	    			questList.add(q);
 	    		}
 	    	}
@@ -262,7 +262,7 @@ public class QuestDao {
 	}
 	
 	public Quest findById(int questId) throws FileNotFoundException, IOException {
-		Quest q = new Quest();
+		Quest quest = new Quest();
 		String sql = "SELECT * FROM quest WHERE quest_id = ?";
 		
 		try (Connection conn = connector.getConnection();
@@ -273,26 +273,26 @@ public class QuestDao {
 			
 			// execute query
 			try (ResultSet rs = pstmt.executeQuery()) {
-				q.setUserId(rs.getInt("user_id"));
-    			q.setTitle(rs.getString("title"));
-    			q.setId(rs.getInt("id"));
+				quest.setUserId(rs.getInt("user_id"));
+    			quest.setTitle(rs.getString("title"));
+    			quest.setQuestId(rs.getInt("quest_id"));
     			
     			// date -> local date
     			Date d = rs.getDate("due_date");
     			ZoneId defaultZoneId = ZoneId.systemDefault();
     			Instant instant = d.toInstant();
     			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();
-    			q.setDueDate(ld);    			
+    			quest.setDueDate(ld);    			
     			
-    			q.setDifficulty(rs.getInt("difficulty"));
-    			q.setCompleted(rs.getBoolean("completed"));
-    			q.setCategory(rs.getString("category"));
-    			q.setQuestsetId(rs.getInt("questset_id"));
+    			quest.setDifficulty(rs.getInt("difficulty"));
+    			quest.setCompleted(rs.getBoolean("completed"));
+    			quest.setCategory(rs.getString("category"));
+    			quest.setQuestsetId(rs.getInt("questset_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return q;
+		return quest;
 	}
 	
 	
