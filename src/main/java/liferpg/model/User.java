@@ -31,7 +31,7 @@ public class User {
     public void setCompletedCount(int completedCount) { this.completedCount = completedCount; }
 
     public List<Integer> getQuestsetIdList() { return questsetIdList; }
-    public void setQuestsetIdList(List<Integer> questSet_id_list) { this.questsetIdList = questsetIdList; }
+    public void setQuestsetIdList(List<Integer> questsetIdList) { this.questsetIdList = questsetIdList; }
 
     public List<Integer> getQuestIdList() { return questIdList; }
     public void setQuestIdList(List<Integer> questIdList) { this.questIdList = questIdList; }
