@@ -164,11 +164,7 @@ public class QuestsetDao {
 	    			questset.setUserId(rs.getInt("user_id"));
 	    			 
 	    			// date -> local date
-	    			Date d = rs.getDate("start_date");
-	    			ZoneId defaultZoneId = ZoneId.systemDefault();
-	    			Instant instant = d.toInstant();
-	    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();  
-	    			questset.setStartDate(ld);  
+ 	    			questset.setStartDate(rs.getDate("start_date").toLocalDate());  
 	    			
 	    			questset.setRepeatNum(rs.getInt("repeat_num"));
 	    			questset.setQuestsetId(rs.getInt("questset_id"));
@@ -198,12 +194,8 @@ public class QuestsetDao {
 			try (ResultSet rs = pstmt.executeQuery()) {
     			questset.setUserId(rs.getInt("user_id"));
     			
-    			// date -> local date
-    			Date d = rs.getDate("start_date");
-    			ZoneId defaultZoneId = ZoneId.systemDefault();
-    			Instant instant = d.toInstant();
-    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();  
-    			questset.setStartDate(ld);  
+    			// date -> local date 
+    			questset.setStartDate(rs.getDate("start_date").toLocalDate());  
      			
     			questset.setRepeatNum(rs.getInt("repeat_num"));
     			questset.setQuestsetId(rs.getInt("questset_id"));

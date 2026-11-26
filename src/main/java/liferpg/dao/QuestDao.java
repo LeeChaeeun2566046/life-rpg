@@ -240,11 +240,7 @@ public class QuestDao {
 	    			quest.setQuestId(rs.getInt("quest_id"));
 	    			
 	    			// date -> local date
-	    			Date d = rs.getDate("due_date");
-	    			ZoneId defaultZoneId = ZoneId.systemDefault();
-	    			Instant instant = d.toInstant();
-	    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();
-	    			quest.setDueDate(ld);   
+ 	    			quest.setDueDate(rs.getDate("due_date").toLocalDate());   
 	    			
 	    			quest.setDifficulty(rs.getInt("difficulty"));
 	    			quest.setCompleted(rs.getBoolean("completed"));
@@ -278,11 +274,7 @@ public class QuestDao {
     			quest.setQuestId(rs.getInt("quest_id"));
     			
     			// date -> local date
-    			Date d = rs.getDate("due_date");
-    			ZoneId defaultZoneId = ZoneId.systemDefault();
-    			Instant instant = d.toInstant();
-    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();
-    			quest.setDueDate(ld);    			
+     			quest.setDueDate(rs.getDate("due_date").toLocalDate());    			
     			
     			quest.setDifficulty(rs.getInt("difficulty"));
     			quest.setCompleted(rs.getBoolean("completed"));
