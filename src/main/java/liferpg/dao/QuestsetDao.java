@@ -115,7 +115,7 @@ public class QuestsetDao {
 	
 	public List<QuestSet> findAll() throws FileNotFoundException, IOException{
 	    List<QuestSet> questsetList = new ArrayList<>();
-	    String sql = "SELECT * FROM quest";
+	    String sql = "SELECT * FROM questset";
 	    
 	    try (Connection conn = connector.getConnection();
 	    		PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -126,16 +126,14 @@ public class QuestsetDao {
 	    			questset.setUserId(rs.getInt("user_id"));
 	    			
 	    			// date -> local date
-	    			Date d = rs.getDate("start_date");
-	    			ZoneId defaultZoneId = ZoneId.systemDefault();
-	    			Instant instant = d.toInstant();
-	    			LocalDate ld = instant.atZone(defaultZoneId).toLocalDate();  
-	    			questset.setStartDate(ld);  
+	    			questset.setStartDate(rs.getDate("start_date").toLocalDate());  
 	    			
 	    			questset.setRepeatNum(rs.getInt("repeat_num"));
 	    			questset.setQuestsetId(rs.getInt("questset_id"));
 	    			questset.setConsistent(rs.getBoolean("consistent"));
 	    			questset.setCompletedNum(rs.getInt("completed_num"));
+	    			
+	    			questsetList.add(questset);
 	    		}
 	    	}
 	    } catch (SQLException e) {
@@ -149,7 +147,7 @@ public class QuestsetDao {
 	// 완료되지 않은 questset을 찾고 싶을 수도 있고, 완료된 questset를 찾고 싶을 수도 있어서 파라미터로 전달할 수 있도록 함
 	public List<QuestSet> findCompleted(boolean boo) throws FileNotFoundException, IOException {
 	    List<QuestSet> questsetList = new ArrayList<>();
-	    String sql = "SELECT * FROM quest WHERE completed=?";
+	    String sql = "SELECT * FROM questset WHERE completed=?";
 	    
 	    try (Connection conn = connector.getConnection();
 	    		PreparedStatement pstmt = conn.prepareStatement(sql);){
@@ -182,7 +180,7 @@ public class QuestsetDao {
 	
 	public QuestSet findById(int questsetId) throws FileNotFoundException, IOException{
 		QuestSet questset = new QuestSet();
-		String sql = "SELECT * FROM quest WHERE quest_id = ?";
+		String sql = "SELECT * FROM questset WHERE questset_id = ?";
 		
 		try (Connection conn = connector.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -192,15 +190,18 @@ public class QuestsetDao {
 			
 			// execute query
 			try (ResultSet rs = pstmt.executeQuery()) {
-    			questset.setUserId(rs.getInt("user_id"));
+				while (rs.next()) {
+					questset.setUserId(rs.getInt("user_id"));
     			
-    			// date -> local date 
-    			questset.setStartDate(rs.getDate("start_date").toLocalDate());  
+					// date -> local date 
+					questset.setStartDate(rs.getDate("start_date").toLocalDate());  
      			
-    			questset.setRepeatNum(rs.getInt("repeat_num"));
-    			questset.setQuestsetId(rs.getInt("questset_id"));
-    			questset.setConsistent(rs.getBoolean("consistent"));
-    			questset.setCompletedNum(rs.getInt("completed_num"));
+					questset.setRepeatNum(rs.getInt("repeat_num"));
+					questset.setQuestsetId(rs.getInt("questset_id"));
+					questset.setConsistent(rs.getBoolean("consistent"));
+					questset.setCompletedNum(rs.getInt("completed_num"));
+					
+				}
  			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -165,7 +165,7 @@ public class QuestDao {
 		 * quest 객체들을 돌려받을 수 있다.
 		 */
 		 
- 		List<Integer> questsetIdList = new ArrayList<>();  // return value
+ 		List<Integer> questIdList = new ArrayList<>();  // return value
 	    String sql = "SELECT quest_id FROM quest WHERE questset_id = ?";
     	
 	    try (Connection conn = connector.getConnection();
@@ -178,15 +178,15 @@ public class QuestDao {
 	    	try (ResultSet rs = pstmt.executeQuery()) {  
 	    		// questset_id = 101 이라고 치자
 	    		// rs 에는 questset_id = 101 인 quest의 id가 쫘라라락 들어 있음
-		    	while (rs.next()) {
-	    			questsetIdList.add(rs.getInt("questset_id")); 
+		    	if (rs.next()) {
+	    			questIdList.add(rs.getInt("quest_id")); 
 	    			// 사실상 column 이 한개라 getInt(1)이라 해도 무방하지만 직관적으로 알아볼수있게 column name 명시함
 	    		}
 	    	}
      	} catch (SQLException e) {
      		e.printStackTrace();
      	}    
-	    return questsetIdList;
+	    return questIdList;
 	}
 
 	// Quest 목록 보여줄때 사용
@@ -203,8 +203,7 @@ public class QuestDao {
 	    			q.setTitle(rs.getString("title"));
 	    			q.setQuestId(rs.getInt("quest_id"));
 
-	    			Date date = rs.getDate("due_date");
-	    			q.setDueDate(LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault()));   
+ 	    			q.setDueDate(rs.getDate("due_date").toLocalDate());   
 	    			
 	    			q.setDifficulty(rs.getInt("difficulty"));
 	    			q.setCompleted(rs.getBoolean("completed"));
@@ -257,7 +256,7 @@ public class QuestDao {
 		
 	}
 	
-	public Quest findById(int questId) throws FileNotFoundException, IOException {
+	public Quest findByQuestId(int questId) throws FileNotFoundException, IOException {
 		Quest quest = new Quest();
 		String sql = "SELECT * FROM quest WHERE quest_id = ?";
 		
@@ -269,17 +268,19 @@ public class QuestDao {
 			
 			// execute query
 			try (ResultSet rs = pstmt.executeQuery()) {
-				quest.setUserId(rs.getInt("user_id"));
-    			quest.setTitle(rs.getString("title"));
-    			quest.setQuestId(rs.getInt("quest_id"));
+				while (rs.next()) {
+					quest.setUserId(rs.getInt("user_id"));
+					quest.setTitle(rs.getString("title"));
+					quest.setQuestId(rs.getInt("quest_id"));
     			
-    			// date -> local date
-     			quest.setDueDate(rs.getDate("due_date").toLocalDate());    			
+					// date -> local date
+					quest.setDueDate(rs.getDate("due_date").toLocalDate());    			
     			
-    			quest.setDifficulty(rs.getInt("difficulty"));
-    			quest.setCompleted(rs.getBoolean("completed"));
-    			quest.setCategory(rs.getString("category"));
-    			quest.setQuestsetId(rs.getInt("questset_id"));
+					quest.setDifficulty(rs.getInt("difficulty"));
+					quest.setCompleted(rs.getBoolean("completed"));
+					quest.setCategory(rs.getString("category"));
+					quest.setQuestsetId(rs.getInt("questset_id"));
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -303,7 +304,9 @@ public class QuestDao {
 	    	try (ResultSet rs = pstmt.executeQuery()) {
 	    		// rs는 row 단위로 cursor를 옮긴다. 
 	    		// quest_id는 중복될 수 없기 때문에 지금 rs에는 row가 딱 하나만 있다.
-	    		category = rs.getString("category");
+	    		if (rs.next()) {
+    	    		category = rs.getString("category");
+	    		}
 	    	}
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
@@ -325,8 +328,14 @@ public class QuestDao {
 	    	try (ResultSet rs = pstmt.executeQuery()) {
 	    		// rs는 row 단위로 cursor를 옮긴다. 
 	    		// quest_id는 중복될 수 없기 때문에 지금 rs에는 row가 딱 하나만 있다.
-	    		difficulty = rs.getInt("category");
-	    	}
+	    		
+	    		// rs.next()를 한번은 꼭 써줘야 한다
+	    		// A ResultSet cursor starts before the first row. Calling rs.next() once moves the cursor onto the first row
+
+	    		if (rs.next()) {
+		    		difficulty = rs.getInt("difficulty");	    			
+	    		}
+ 	    	}
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
 	    }
@@ -346,7 +355,9 @@ public class QuestDao {
 	    	try (ResultSet rs = pstmt.executeQuery()) {
 	    		// rs는 row 단위로 cursor를 옮긴다. 
 	    		// quest_id는 중복될 수 없기 때문에 지금 rs에는 row가 딱 하나만 있다.
-	    		questsetId = rs.getInt("questset_id");
+	    		if (rs.next()) {
+	    			questsetId = rs.getInt("questset_id");
+	    		}
 	    	}
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
