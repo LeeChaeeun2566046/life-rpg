@@ -55,7 +55,7 @@ public class QuestsetDao {
 			try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
 				if (generatedKeys.next()) {
 					int questsetId = generatedKeys.getInt("questset_id");
-					questset.setId(questsetId);
+					questset.setQuestsetId(questsetId);
 					System.out.println(questsetId+ " questset이 추가되었습니다");
 				}
 			}// end of try
