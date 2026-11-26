@@ -56,7 +56,7 @@ public class QuestDao {
 			try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
 				if (generatedKeys.next()) {
 					int questId = generatedKeys.getInt("quest_id");
-					quest.setId(questId);
+					quest.setQuestId(questId);
 					System.out.println(questId+ " quest가 추가되었습니다");
 				}
 			}// end of try
