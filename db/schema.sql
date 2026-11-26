@@ -21,7 +21,7 @@ CREATE TABLE questset (
     start_date DATE DEFAULT (CURRENT_DATE) NOT NULL,
     consistent TINYINT(1) DEFAULT 1,
 
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
 CREATE TABLE quest (
@@ -34,7 +34,7 @@ CREATE TABLE quest (
     due_date DATE DEFAULT (CURRENT_DATE) NOT NULL,
     questset_id INT UNSIGNED,
 
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (questset_id) REFERENCES questset(questset_id)
 );
 
