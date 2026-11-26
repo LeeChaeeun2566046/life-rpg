@@ -2,8 +2,8 @@ package liferpg.model;
 
 import java.time.LocalDate;
 
-public class Awards {
-    private int id;
+public class QuestSet {
+    private int questsetId;
     private int userId;
     private int repeatNum;
     private int completedNum;
@@ -11,8 +11,8 @@ public class Awards {
     private boolean consistent;
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getQuestsetId() { return questsetId; }
+    public void setQuestsetId(int questsetId) { this.questsetId = questsetId; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
