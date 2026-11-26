@@ -333,7 +333,7 @@ public class QuestDao {
 	    return difficulty;
 	}
 	
-	public int findAwardId(int questId) throws FileNotFoundException, IOException {
+	public int findQuestsetId(int questId) throws FileNotFoundException, IOException {
 	    String sql = "SELECT questset_id FROM quest WHERE quest_id = ?";
 	    int questsetId = 0;
 	    try (Connection conn = connector.getConnection();
