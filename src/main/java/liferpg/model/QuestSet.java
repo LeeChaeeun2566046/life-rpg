@@ -9,6 +9,7 @@ public class QuestSet {
     private int completedNum;
     private LocalDate startDate;
     private boolean consistent;
+    private boolean completed;
 
     // Getters and Setters
     public int getQuestsetId() { return questsetId; }
