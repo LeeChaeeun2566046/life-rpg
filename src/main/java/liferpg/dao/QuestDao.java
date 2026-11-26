@@ -250,7 +250,7 @@ public class QuestDao {
 	    			quest.setCompleted(rs.getBoolean("completed"));
 	    			quest.setCategory(rs.getString("category"));
 	    			quest.setQuestsetId(rs.getInt("questset_id"));
-	    			questList.add(q);
+	    			questList.add(quest);
 	    		}
 	    	}
 	    } catch (SQLException e) {
