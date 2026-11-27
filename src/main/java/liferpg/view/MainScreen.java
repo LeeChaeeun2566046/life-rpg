@@ -15,11 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import liferpg.controller.ListController;
+import liferpg.controller.MainController;
+
 import java.awt.Component;
 import java.awt.Dimension;
 
 public class MainScreen extends JPanel {
-	public MainScreen() {
+	public MainScreen(MainController controller, ListController listController) {
 		setLayout(new BorderLayout());
 		 setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 80));
 		
@@ -28,17 +31,17 @@ public class MainScreen extends JPanel {
 			    new BoxLayout(profilePanel, BoxLayout.Y_AXIS)
 			);
 		
-		JLabel nameLabel= new JLabel("닉네임: 초록 마법사");
-		JLabel levelLabel= new JLabel("Lv.3");
-		JLabel expLabel=new JLabel("EXP 240/300");
-		JProgressBar expBar = new JProgressBar(0, 300);
-		expBar.setValue(240);
+		JLabel nameLabel= new JLabel("닉네임: "+controller.getNickname());
+		JLabel levelLabel= new JLabel("Lv."+controller.getLevel());
+		JLabel expLabel=new JLabel("EXP"+controller.getExp()+"/"+controller.getRequiredExp());
+		JProgressBar expBar = new JProgressBar(0, controller.getRequiredExp());
+		expBar.setValue(controller.getExp());
 		expBar.setPreferredSize(new Dimension(250, 18));
 		expBar.setMaximumSize(new Dimension(250, 18));
 		JPanel abilityPanel= new JPanel( new FlowLayout(FlowLayout.LEFT, 10, 0));
-		JLabel intellLabel=new JLabel("지능 50%");
-		JLabel physicalLabel= new JLabel("체력 30%");
-		JLabel cleanLabel=new JLabel("청결도 20%");
+		JLabel intellLabel=new JLabel("지능 "+controller.getIntelligence()+"%");
+		JLabel physicalLabel= new JLabel("체력 "+controller.getStamina()+"%");
+		JLabel cleanLabel=new JLabel("청결도 "+controller.getCleanliness()+"%");
 		abilityPanel.setMaximumSize(new Dimension(400, 35));
 		abilityPanel.add(intellLabel);
 		abilityPanel.add(physicalLabel);
@@ -71,7 +74,7 @@ public class MainScreen extends JPanel {
 
 		questButton.addActionListener(e -> {
 			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-			frame.setContentPane(new ListScreen());
+			frame.setContentPane(new ListScreen(controller, listController));
 			frame.revalidate();
 			frame.repaint();
 		});
