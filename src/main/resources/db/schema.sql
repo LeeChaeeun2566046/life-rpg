@@ -1,0 +1,41 @@
+
+CREATE DATABASE IF NOT EXISTS life_rpg
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE life_rpg;
+
+CREATE TABLE user (
+    user_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nickname VARCHAR(50) UNIQUE,
+    exp INT UNSIGNED DEFAULT 0,
+    level INT UNSIGNED DEFAULT 1 NOT NULL,
+    completed_count INT UNSIGNED DEFAULT 0
+);
+
+CREATE TABLE questset (
+    questset_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    repeat_num INT UNSIGNED NOT NULL,
+    completed_num INT UNSIGNED DEFAULT 0,
+    user_id INT UNSIGNED NOT NULL,
+    start_date DATE DEFAULT (CURRENT_DATE) NOT NULL,
+    consistent TINYINT(1) DEFAULT 1,
+    completed TINYINT(1) DEFAULT 0,
+    CONSTRAINT fk_questset_user FOREIGN KEY (user_id) REFERENCES user(user_id) 
+);
+
+CREATE TABLE quest (
+    quest_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT UNSIGNED NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    difficulty INT UNSIGNED NOT NULL,
+    completed TINYINT(1) UNSIGNED  NOT NULL DEFAULT 0,
+    due_date DATE DEFAULT (CURRENT_DATE) NOT NULL,
+    questset_id INT UNSIGNED,
+
+    CONSTRAINT fk_quest_user FOREIGN KEY (user_id) REFERENCES user(user_id),
+    CONSTRAINT fk_quest_questset FOREIGN KEY (questset_id) REFERENCES questset(questset_id)
+);
+
+ 
